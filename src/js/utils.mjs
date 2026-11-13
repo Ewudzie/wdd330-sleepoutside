@@ -29,3 +29,24 @@ export function setClick(selector, callback) {
   qs(selector).addEventListener("click", callback);
 }
 
+// Render a list of items into a parent element using a template function.
+// templateFn:    function that takes one item and returns an HTML string
+// parentElement: the element to insert the HTML into
+// list:          the array of items to render
+// position:      where to insert (default "afterbegin"); see insertAdjacentHTML
+// clear:         if true, empty parentElement before inserting (default false)
+export function renderListWithTemplate(
+  templateFn,
+  parentElement,
+  list,
+  position = "afterbegin",
+  clear = false,
+) {
+  // Optionally remove anything already in the parent element.
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  // Build one HTML string per item, then insert them all at once.
+  const htmlStrings = list.map(templateFn);
+  parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
+}
