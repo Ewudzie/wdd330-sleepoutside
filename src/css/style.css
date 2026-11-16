@@ -261,3 +261,16 @@ footer {
   font-size: var(--small-font);
   padding: 1em;
 }
+
+/* Utility: hide any element (toggled on/off by JavaScript) */
+.hide {
+  display: none;
+}
+
+/* Cart total at the bottom of the cart page */
+.cart-footer {
+  text-align: right;
+  font-size: 1.25em;
+  font-weight: bold;
+  padding: 1em 0;
+}
