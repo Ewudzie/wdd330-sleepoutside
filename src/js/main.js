@@ -4,6 +4,8 @@
 import ProductData from "./ProductData.mjs";
 // ProductList turns that data into product cards on the page.
 import ProductList from "./ProductList.mjs";
+// Shared helper that loads the header and footer partials into the page.
+import { loadHeaderFooter } from "./utils.mjs";
 
 // Data source for tents. ProductData builds the path ../json/tents.json.
 const dataSource = new ProductData("tents");
@@ -15,3 +17,5 @@ const element = document.querySelector(".product-list");
 // and start it. init() fetches the data and renders the cards.
 const productList = new ProductList("Tents", dataSource, element);
 productList.init();
+// Fill the #main-header and #main-footer placeholders.
+loadHeaderFooter();

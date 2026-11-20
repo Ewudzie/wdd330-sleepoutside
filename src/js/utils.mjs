@@ -50,3 +50,42 @@ export function renderListWithTemplate(
   const htmlStrings = list.map(templateFn);
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
+
+// Render a single template (not a list) into a parent element.
+// template:      HTML string to insert
+// parentElement: the element to fill
+// data:          optional data to pass to the callback
+// callback:      optional function to run after the template is inserted
+export function renderWithTemplate(template, parentElement, data, callback) {
+  // Replace whatever is in the parent with the template.
+  parentElement.innerHTML = template;
+  // If a callback was given, run it (e.g. to fill in data or add listeners).
+  if (callback) {
+    callback(data);
+  }
+}
+
+// Fetch an HTML file and return its contents as a string.
+// path: the URL of the file, e.g. "/partials/header.html"
+export async function loadTemplate(path) {
+  const res = await fetch(path);
+  // .text() (not .json()) because the file is HTML, not JSON.
+  const template = await res.text();
+  return template;
+}
+
+// Load the shared header and footer into the current page.
+// Each page needs <header id="main-header"> and <footer id="main-footer">.
+export async function loadHeaderFooter() {
+  // 1. Fetch both partials. Absolute paths work from any page depth.
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
+
+  // 2. Find the placeholder elements in this page.
+  const headerElement = document.querySelector("#main-header");
+  const footerElement = document.querySelector("#main-footer");
+
+  // 3. Insert the HTML into the placeholders.
+  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(footerTemplate, footerElement);
+}

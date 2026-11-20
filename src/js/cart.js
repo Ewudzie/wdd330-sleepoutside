@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
 
 function renderCartContents() {
   let cartItems = getLocalStorage("so-cart") || [];
@@ -52,3 +52,4 @@ function renderCartTotal(cartItems) {
   footer.classList.remove("hide");
 }
 renderCartContents();
+loadHeaderFooter();
