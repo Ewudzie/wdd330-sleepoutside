@@ -1,5 +1,13 @@
 // Shared helper that renders any list with a template function.
-import { renderListWithTemplate } from "./utils.mjs";
+import { renderListWithTemplate, qs } from "./utils.mjs";
+
+// Turns "sleeping-bags" into "Sleeping Bags"
+function formatCategory(category) {
+  return category
+    .split("-") // ["sleeping", "bags"]
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // ["Sleeping", "Bags"]
+    .join(" "); // "Sleeping Bags"
+}
 
 // ProductList.mjs - builds the list of product cards from product data.
 
@@ -9,8 +17,8 @@ import { renderListWithTemplate } from "./utils.mjs";
 // so the existing CSS still styles them.
 function productCardTemplate(product) {
   return `<li class="product-card">
-    <a href="product_pages/?product=${product.Id}">
-      <img src="${product.Image}" alt="Image of ${product.Name}" />
+    <a href="../product_pages/?product=${product.Id}">
+      <img src="${product.Images.PrimaryMedium}" alt="Image of ${product.Name}" />
       <h3 class="card__brand">${product.Brand.Name}</h3>
       <h2 class="card__name">${product.NameWithoutBrand}</h2>
       <p class="product-card__price">$${product.FinalPrice}</p>
@@ -32,9 +40,14 @@ export default class ProductList {
   // so the fetch happens here instead. Call init() after creating the list.
   async init() {
     // Wait for the JSON data to arrive (an array of product objects).
-    const list = await this.dataSource.getData();
+    const list = await this.dataSource.getData(this.category);
     // Turn the data into cards on the page.
     this.renderList(list);
+
+    // Show the category in the heading, e.g. "Top Products: Backpacks"
+    const categoryName = formatCategory(this.category);
+    qs(".products h2").textContent = `Top Products: ${categoryName}`;
+    document.title = `Sleep Outside | ${categoryName}`;
   }
 
   // Builds a card for every product and inserts them into listElement.
