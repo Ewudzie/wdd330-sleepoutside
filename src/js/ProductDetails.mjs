@@ -44,7 +44,7 @@ export default class ProductDetails {
     qs(".product-detail h2").textContent = product.NameWithoutBrand;
 
     const image = qs(".product-detail img");
-    image.src = product.Image;
+    image.src = product.Images.PrimaryLarge;
     image.alt = product.NameWithoutBrand;
 
     qs(".product-card__price").textContent = `$${product.FinalPrice}`;
