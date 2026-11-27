@@ -1,4 +1,4 @@
-import { getLocalStorage } from "./utils.mjs";
+import { getLocalStorage, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs";
 
 // Turn a <form> into a plain object: { fname: "Ann", zip: "83440", ... }
@@ -83,8 +83,17 @@ export default class CheckoutProcess {
     order.tax = this.tax.toFixed(2);
 
     const services = new ExternalServices();
-    const response = await services.checkout(order);
-    console.log(response);
-    return response;
+    try {
+      await services.checkout(order);
+      // Success: empty the cart and go to the confirmation page
+      localStorage.removeItem(this.key);
+      location.assign("/checkout/success.html");
+    } catch (err) {
+      // err.message is the server's JSON, e.g. { cardNumber: "Invalid Card Number" }
+      // Show one alert for each problem the server reported
+      for (const message of Object.values(err.message)) {
+        alertMessage(message);
+      }
+    }
   }
 }
