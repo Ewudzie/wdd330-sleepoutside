@@ -9,7 +9,7 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
+export default class ExternalServices {
   // No constructor needed any more: the category is passed to getData instead.
 
   async getData(category) {
@@ -22,5 +22,19 @@ export default class ProductData {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
     return data.Result;
+  }
+
+  // Send an order to the server. payload is a plain object with the
+  // exact keys the server expects (fname, lname, street, ..., items).
+  async checkout(payload) {
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    };
+    const response = await fetch(`${baseURL}checkout`, options);
+    return convertToJson(response);
   }
 }

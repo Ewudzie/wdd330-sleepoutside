@@ -47,7 +47,7 @@ function productCardTemplate(product) {
 
 export default class ProductList {
   // category:    which kind of product this list shows (e.g. "Tents")
-  // dataSource:  a ProductData instance that fetches the products
+  // dataSource:  an ExternalServices instance that fetches the products
   // listElement: the HTML element the cards are inserted into
   constructor(category, dataSource, listElement) {
     this.category = category;

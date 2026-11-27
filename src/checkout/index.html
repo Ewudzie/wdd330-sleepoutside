@@ -16,8 +16,60 @@
     <header class="divider" id="main-header"></header>
 
     <main class="divider">
-      <section class="products">
+      <section class="checkout">
         <h2>Review & Place your Order</h2>
+
+        <!-- The name="..." values must match the keys the checkout server expects -->
+        <form name="checkout" class="checkout-form">
+          <fieldset>
+            <legend>Shipping</legend>
+            <label for="fname">First name</label>
+            <input id="fname" name="fname" type="text" />
+
+            <label for="lname">Last name</label>
+            <input id="lname" name="lname" type="text" />
+
+            <label for="street">Street</label>
+            <input id="street" name="street" type="text" />
+
+            <label for="city">City</label>
+            <input id="city" name="city" type="text" />
+
+            <label for="state">State</label>
+            <input id="state" name="state" type="text" />
+
+            <label for="zip">Zip</label>
+            <input id="zip" name="zip" type="text" />
+          </fieldset>
+
+          <fieldset>
+            <legend>Payment</legend>
+            <label for="cardNumber">Card number</label>
+            <input id="cardNumber" name="cardNumber" type="text" />
+
+            <label for="expiration">Expiration (MM/YY)</label>
+            <input id="expiration" name="expiration" type="text" />
+
+            <label for="code">Security code</label>
+            <input id="code" name="code" type="text" />
+          </fieldset>
+
+          <!-- CheckoutProcess fills in these amounts -->
+          <fieldset id="order-summary">
+            <legend>Order Summary</legend>
+            <p>
+              Item subtotal (<span id="num-items">0</span>):
+              <span id="subtotal">$0.00</span>
+            </p>
+            <p>Shipping estimate: <span id="shipping">$0.00</span></p>
+            <p>Tax: <span id="tax">$0.00</span></p>
+            <p>
+              <strong>Order total: <span id="orderTotal">$0.00</span></strong>
+            </p>
+          </fieldset>
+
+          <button type="submit" id="checkoutSubmit">Checkout</button>
+        </form>
       </section>
     </main>
     <footer id="main-footer"></footer>

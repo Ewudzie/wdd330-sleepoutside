@@ -324,3 +324,52 @@ footer {
   font-weight: bold;
   padding: 1em 0;
 }
+
+/* A link styled like the site's buttons (e.g. Checkout) */
+a.button {
+  display: inline-block;
+  padding: 0.5em 2em;
+  margin: 0 0.75rem;
+  background-color: var(--secondary-color);
+  color: white;
+  text-decoration: none;
+  font-size: var(--large-font);
+}
+
+a.button:hover {
+  opacity: 0.9;
+}
+
+/* Checkout page */
+.checkout {
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.checkout-form fieldset {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--light-grey);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.checkout-form legend {
+  font-weight: bold;
+  padding: 0 0.5rem;
+}
+
+.checkout-form label {
+  margin-top: 0.75rem;
+}
+
+.checkout-form input {
+  padding: 0.5em;
+  font-size: 1em;
+  border: 1px solid var(--light-grey);
+}
+
+#order-summary p {
+  padding: 0.25rem 0;
+}
