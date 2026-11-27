@@ -9,6 +9,25 @@ function formatCategory(category) {
     .join(" "); // "Sleeping Bags"
 }
 
+// Returns a sorted copy of the products. sortBy is a <select> value
+// such as "price-asc". [...list] copies the array so the original order
+// from the API is kept.
+function sortProducts(list, sortBy) {
+  const sorted = [...list];
+  switch (sortBy) {
+    case "name-asc":
+      return sorted.sort((a, b) => a.Name.localeCompare(b.Name));
+    case "name-desc":
+      return sorted.sort((a, b) => b.Name.localeCompare(a.Name));
+    case "price-asc":
+      return sorted.sort((a, b) => a.FinalPrice - b.FinalPrice);
+    case "price-desc":
+      return sorted.sort((a, b) => b.FinalPrice - a.FinalPrice);
+    default:
+      return sorted;
+  }
+}
+
 // ProductList.mjs - builds the list of product cards from product data.
 
 // Returns the HTML for one product card as a string.
@@ -39,10 +58,16 @@ export default class ProductList {
   // Fetching data is asynchronous, and a constructor can't be async,
   // so the fetch happens here instead. Call init() after creating the list.
   async init() {
-    // Wait for the JSON data to arrive (an array of product objects).
     const list = await this.dataSource.getData(this.category);
-    // Turn the data into cards on the page.
-    this.renderList(list);
+    // Keep the products so they can be re-sorted without another API call.
+    this.products = list;
+
+    // Render using the dropdown's current choice, then re-render on change.
+    const sortSelect = qs("#sort");
+    this.renderList(sortProducts(this.products, sortSelect.value));
+    sortSelect.addEventListener("change", () => {
+      this.renderList(sortProducts(this.products, sortSelect.value));
+    });
 
     // Show the category in the heading, e.g. "Top Products: Backpacks"
     const categoryName = formatCategory(this.category);
