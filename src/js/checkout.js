@@ -14,3 +14,9 @@ order.init();
 document
   .querySelector("#zip")
   .addEventListener("blur", order.calculateOrderTotal.bind(order));
+
+// Submit the order without reloading the page.
+document.forms["checkout"].addEventListener("submit", (event) => {
+  event.preventDefault();
+  order.checkout(event.target);
+});

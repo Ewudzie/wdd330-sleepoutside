@@ -6,7 +6,7 @@ export default class ProductDetails {
     this.productId = productId;
     // empty for now; filled in once the data has been fetched
     this.product = {};
-    // where to get product data from (an instance of ProductData)
+    // where to get product data from (an instance of ExternalServices)
     this.dataSource = dataSource;
   }
 
