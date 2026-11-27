@@ -373,3 +373,19 @@ a.button:hover {
 #order-summary p {
   padding: 0.25rem 0;
 }
+
+/* Alert messages (created by alertMessage in utils.mjs) */
+.alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--primary-color);
+  border: 1px solid var(--tertiary-color);
+  margin: 0.5rem 1rem;
+}
+
+.alert span {
+  padding: 0 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}

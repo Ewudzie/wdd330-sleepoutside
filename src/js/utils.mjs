@@ -89,3 +89,23 @@ export async function loadHeaderFooter() {
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
 }
+
+// Show a dismissible message at the top of <main>
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement("div");
+  alert.classList.add("alert");
+  alert.innerHTML = `<p>${message}</p><span>X</span>`;
+
+  // Clicking the X removes this alert
+  alert.addEventListener("click", function (e) {
+    if (e.target.tagName === "SPAN") {
+      this.remove();
+    }
+  });
+
+  const main = document.querySelector("main");
+  main.prepend(alert);
+
+  // Scroll to the top so the user sees the message
+  if (scroll) window.scrollTo(0, 0);
+}
